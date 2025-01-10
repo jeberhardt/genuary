@@ -1,0 +1,189 @@
+<html>
+<head>
+    <title>Genuary - Jan 10 - Tau</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        const tau = Math.PI * 2;
+        const square1 = document.createElement('div');
+        square1.style.position = 'absolute';
+        square1.style.width = '100vw';
+        square1.style.height = '100vh';
+        square1.style.backgroundColor = 'black';
+        document.body.appendChild(square1);
+
+        
+        const square2 = document.createElement('div');
+        square2.style.width = `${tau}px`;
+        square2.style.height = `${tau}px`;
+        square2.style.backgroundColor = 'red';
+        square2.style.position = 'absolute';
+        square2.style.top = '50%';
+        square2.style.left = '50%';
+        square2.style.transform = 'translate(-50%, -50%)';
+        document.body.appendChild(square2);
+        square2.style.width = `${tau}px`;
+        square2.style.height = `${tau}px`;
+        square2.style.backgroundColor = 'red';
+        document.body.appendChild(square2);
+        
+
+        growSquare1 = () => {
+            gsap.to(square1, {
+                width: '100vw',
+                height: '100vh',
+                duration: tau,
+                repeat: 0,
+                ease: 'power1.inOut',
+                onComplete: function() {
+                    shrinkSquare1();
+                    changeLineColors('red');
+                }
+            });
+        };
+
+        shrinkSquare1 = () => {
+            gsap.to(square1, {
+                width: `${tau + tau}px`,
+                height: `${tau + tau}px`,
+                duration: tau,
+                repeat: 0,
+                ease: 'power1.inOut',
+                onComplete: function() {
+                    growSquare1();
+                }
+            });
+            setTimeout(()=>{
+                square1.style.zIndex = '1';
+                square2.style.zIndex = '0';
+                changeLineColors('black');               
+            }, tau/2 * 1000);
+        };
+
+        growSquare2 = () => {
+            gsap.to(square2, {
+                width: '100vw',
+                height: '100vh',
+                duration: tau,
+                repeat: 0,
+                ease: 'power1.inOut',
+                onComplete: function() {
+                    shrinkSquare2();
+                    square1.style.zIndex = '1';
+                    square2.style.zIndex = '0';
+                    changeLineColors('black');                                     
+                }
+            });
+        };
+        
+        shrinkSquare2 = () => {
+            gsap.to(square2, {
+                width: `${tau + tau}px`,
+                height: `${tau + tau}px`,
+                duration: tau,
+                repeat: 0,
+                ease: 'power1.inOut',
+                onComplete: function() {
+                    growSquare2();
+                }
+            }); 
+            setTimeout(()=>{
+                square1.style.zIndex = '0';
+                square2.style.zIndex = '1';
+                changeLineColors('red');
+            }, tau/2 * 1000);            
+        };        
+
+        changeLineColors = (color) => {
+            line1.style.backgroundColor = color;
+            line2.style.backgroundColor = color;
+            line3.style.backgroundColor = color;
+            line4.style.backgroundColor = color;
+        };
+
+        const line1 = document.createElement('div');
+        line1.style.position = 'absolute';
+        line1.style.width = tau + 'px';
+        line1.style.backgroundColor = 'red';
+        document.body.appendChild(line1);
+
+        const updateLine1 = () => {
+            const rect1 = square1.getBoundingClientRect();
+            const rect2 = square2.getBoundingClientRect();
+            line1.style.top = `${rect1.top + (tau / 2)}px`;
+            line1.style.left = `${rect1.left + (tau / 2)}px`;
+            line1.style.transformOrigin = 'top left';
+            line1.style.height = `${Math.hypot(rect2.left - rect1.left, rect2.top - rect1.top)}px`;
+            line1.style.transform = `rotate(${Math.atan2(rect1.left - rect2.left, rect2.top - rect1.top)}rad)`;
+        };
+        gsap.ticker.add(updateLine1);
+
+        const line2 = document.createElement('div');
+        line2.style.position = 'absolute';
+        line2.style.width = tau + 'px';
+        line2.style.backgroundColor = 'red';
+        document.body.appendChild(line2);
+
+        const updateLine2 = () => {
+            const rect1 = square1.getBoundingClientRect();
+            const rect2 = square2.getBoundingClientRect();
+            line2.style.top = `${rect1.top + (tau / 2)}px`;
+            line2.style.left = `${rect1.right - (tau / 2)}px`;
+            line2.style.transformOrigin = 'top left';
+            line2.style.height = `${Math.hypot(rect2.right - rect1.right, rect2.top - rect1.top)}px`;
+            line2.style.transform = `rotate(${Math.atan2(rect1.right - rect2.right, rect2.top - rect1.top)}rad)`;
+        };
+        gsap.ticker.add(updateLine2);
+        
+        const line3 = document.createElement('div');
+        line3.style.position = 'absolute';
+        line3.style.width = tau + 'px';
+        line3.style.backgroundColor = 'red';
+        document.body.appendChild(line3);
+
+        const updateLine3 = () => {
+            const rect1 = square1.getBoundingClientRect();
+            const rect2 = square2.getBoundingClientRect();
+            line3.style.top = `${rect1.bottom - (tau / 2)}px`;
+            line3.style.left = `${rect1.left + (tau / 2)}px`;
+            line3.style.transformOrigin = 'top left';
+            line3.style.height = `${Math.hypot(rect2.left - rect1.left, rect2.bottom - rect1.bottom)}px`;
+            line3.style.transform = `rotate(${Math.atan2(rect1.left - rect2.left, rect2.bottom - rect1.bottom)}rad)`;
+        };
+        gsap.ticker.add(updateLine3);
+        
+        const line4 = document.createElement('div');
+        line4.style.position = 'absolute';
+        line4.style.width = tau + 'px';
+        line4.style.backgroundColor = 'red';
+        document.body.appendChild(line4);
+
+        const updateLine4 = () => {
+            const rect1 = square1.getBoundingClientRect();
+            const rect2 = square2.getBoundingClientRect();
+            line4.style.top = `${rect1.bottom - (tau / 2)}px`;
+            line4.style.left = `${rect1.right - (tau / 2)}px`;
+            line4.style.transformOrigin = 'top left';
+            line4.style.height = `${Math.hypot(rect2.right - rect1.right, rect2.bottom - rect1.bottom - tau)}px`;
+            line4.style.transform = `rotate(${Math.atan2(rect1.right - rect2.right, rect2.bottom - rect1.bottom)}rad)`;
+        };
+        gsap.ticker.add(updateLine4);        
+
+        shrinkSquare1();
+        growSquare2();
+
+    </script>
+</body>
+
+</html>
