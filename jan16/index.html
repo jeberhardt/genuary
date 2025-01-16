@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Red Square</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+    <script>
+        function setup() {
+            let canvas = createCanvas(windowWidth, windowHeight);
+            canvas.position(0, 0);
+            frameRate(1 );
+        }
+
+        function draw() {
+            background('grey');
+            let red = random(0, 255);
+            let green = random(0, 255);
+            let blue = random(0, 255);
+            fill(red, green, blue);
+            let square1 = square(30, 30, 55, 20);
+            fill(red/2, green/2, blue/2);
+            let square2 = square(90, 30, 55, 20);
+            fill(red*3, green*3, blue*3);
+            let square3 = square(150, 30, 55, 20);
+            fill(red*2, green*2, blue*2);
+            let square4 = square(210, 30, 55, 20);
+            fill(255 - red, 255 - green, 255 - blue);
+            let square5 = square(270, 30, 55, 20);
+            fill(Math.abs(red - 255 / 2), Math.abs(green - 255 / 2), Math.abs(blue - 255 / 2));
+            let square6 = square(330, 30, 55, 20);
+            let rand1 = random(0, 255);
+            fill(Math.abs(rand1 - red), Math.abs(rand1 - green), Math.abs(rand1 - blue));
+            let square7 = square(390, 30, 55, 20);                        
+        }
+
+        function windowResized() {
+            resizeCanvas(windowWidth, windowHeight);
+            redraw();
+        }
+    </script>
+</head>
+<body>
+</body>
+</html>
